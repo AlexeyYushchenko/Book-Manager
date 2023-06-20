@@ -5,8 +5,25 @@
     <title>Authors</title>
 </head>
 <body>
+<h1>Author list</h1>
 <div th:each="author : ${authors}">
-    <a th:href="@{'/users/' + ${author.id}}" th:text="|${author.getId()}. ${author.getName()}|">Author</a>
+    <a th:href="@{'/authors/' + ${author.id}}" th:text="|${author.getId()}. ${author.getName()}|">Author</a>
 </div>
+<br>
+<h1>Add an author</h1>
+<form th:action="@{/authors}" method="post">
+    <label for="name">
+        <input id="name" type="text" name="name">
+    </label>
+    <button type="submit">Add new author</button>
+</form>
+<br>
+
+<div>
+    <a th:href="@{/books}">Go to Books</a>
+</div>
+
+<dif th:insert="~{fragments::errors}"></dif>
+
 </body>
 </html>

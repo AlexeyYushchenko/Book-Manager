@@ -3,10 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <title>Books</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #87CEFA;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .delete-link {
+            color: red;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
 </head>
 <body>
-<div th:each="book : ${books}">
-    <a th:href="@{'/books/' + ${book.id}}" th:text="|${book.getId()} ${book.getTitle()} ${book.getAuthor().getName()}|">Books</a>
+<h1>Book list</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Price</th>
+        <th>View</th>
+        <th>Delete</th>
+    </tr>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.id}">ID</td>
+        <td th:text="${book.title}">Title</td>
+        <td th:text="${book.author.name}">Author</td>
+        <td th:text="${book.price}">Price</td>
+        <td><a th:href="@{'/books/' + ${book.id}}">Edit</a></td>
+        <td>
+            <form th:action="@{/books/{bookId}/delete(bookId=${book.id})}" method="post">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<h1>Add a book</h1>
+<form th:action="@{/books}" method="post">
+    <label for="title">Название:
+        <input id="title" type="text" name="title">
+    </label>
+    <br>
+    <label for="authorId">Автор:
+        <select id="authorId" name="authorId">
+<!--            <option value="">Select an author</option>-->
+            <option th:each="author : ${authors}"
+                    th:text="${author.name}"
+                    th:value="${author.id}"></option>
+        </select>
+    </label>
+    <br>
+    <label for="price">Стоимость:
+        <input id="price" type="text" name="price">
+    </label>
+    <br>
+
+    <button type="submit">Add new book</button>
+</form>
+
+<div>
+    <a th:href="@{/authors}">Go to Authors</a>
 </div>
+
 </body>
 </html>

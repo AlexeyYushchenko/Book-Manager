@@ -21,15 +21,33 @@ public class LoggingAspect {
     public void anyFindAllServiceMethod() {
     }
 
-    @Before("anyFindAllServiceMethod()")
-    public void logBefore(JoinPoint joinPoint) {
-        log.info("Entering: {}.{}() with argument[s] = {}",
-                joinPoint.getSignature().getDeclaringTypeName(),
-                joinPoint.getSignature().getName(),
-                joinPoint.getArgs());
-    }
+//    @Before("anyFindAllServiceMethod()")
+//    public void logBefore(JoinPoint joinPoint) {
+//        log.info("Entering: {}.{}() with argument[s] = {}",
+//                joinPoint.getSignature().getDeclaringTypeName(),
+//                joinPoint.getSignature().getName(),
+//                joinPoint.getArgs());
+//    }
 
-    @Around("anyFindAllServiceMethod() && target(service)")
+//    @Around("anyFindAllServiceMethod() && target(service)")
+//    public Object addLoggingAround(ProceedingJoinPoint joinPoint, Object service) throws Throwable {
+//        log.info("Entering: {}.{}() with argument[s] = {}",
+//                joinPoint.getSignature().getDeclaringTypeName(),
+//                joinPoint.getSignature().getName(),
+//                joinPoint.getArgs());
+//        try {
+//            Object result = joinPoint.proceed();
+//            log.info("RESULT. Invoked {} method in class {}, result {}", joinPoint.getSignature().getName(), service, result);
+//            return result;
+//        } catch (Throwable ex) {
+//            log.info("EXCEPTION. Invoked {} method in class {}, exception {}: {}", joinPoint.getSignature().getName(), service, ex.getClass(), ex.getMessage());
+//            throw ex;
+//        } finally {
+//            log.info("FINISH. Invoked {} method in class {}", joinPoint.getSignature().getName(), service);
+//        }
+//    }
+
+    @Around("target(com.yadev.spring.http.controller.BookController) && target(service)")
     public Object addLoggingAround(ProceedingJoinPoint joinPoint, Object service) throws Throwable {
         log.info("Entering: {}.{}() with argument[s] = {}",
                 joinPoint.getSignature().getDeclaringTypeName(),

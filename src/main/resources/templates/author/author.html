@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Author</title>
+</head>
+<body>
+
+<form th:action="@{/authors/{authorId}/update(authorId=${author.id})}" method="post" th:object="${author}">
+    <label for="name">Name:
+        <input id="name" type="text" name="name" th:value="*{name}">
+    </label><br>
+    <button type="submit">Update</button>
+</form>
+<form th:action="@{/authors/{authorId}/delete(authorId=${author.id})}"
+      method="post">
+    <button type="submit">Remove</button>
+</form>
+
+<div>
+    <a th:href="@{/authors}">Go back</a>
+</div>
+
+<dif th:insert="~{fragments::errors}"></dif>
+
+</body>
+</html>
